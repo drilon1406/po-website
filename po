@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <title>Po 💖</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.25);
+      padding: 35px;
+      border-radius: 25px;
+      max-width: 350px;
+      z-index: 2;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 26px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>Yaaaaay 💖</h1>
+  <p id="text"></p>
+</div>
+
+<script>
+  const text = document.getElementById("text");
+
+  const messages = [
+    "Dionisa… 💕<br>më bëre njeriun më të lumtur në botë 🥰",
+    "Më fal që ndoshta nuk erdhi ashtu siç e kishe imagjinuar… 💔",
+    "Por ndonjëherë gjërat më të bukura vijnë ndryshe… ✨",
+    "Tani…<br><strong>kthehu.</strong> 💖"
+  ];
+
+  let index = 0;
+
+  function showNext() {
+    if (index < messages.length) {
+      text.style.opacity = 0;
+      setTimeout(() => {
+        text.innerHTML = messages[index];
+        text.style.opacity = 1;
+        index++;
+      }, 500);
+    }
+  }
+
+  showNext();
+  setInterval(showNext, 3500);
+
+  // Herz-Animation
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+  }
+
+  setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
