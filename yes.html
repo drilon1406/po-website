@@ -17,35 +17,47 @@
       height: 100vh;
       width: 100vw;
       overflow: hidden;
-      background: black;
+      background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* HINTERGRUNDBILD */
+    /* HINTERGRUND-BILD (GANZ SICHTBAR) */
     .background {
       position: fixed;
       inset: 0;
       background-image: url('img8.jpg');
-      background-size: cover;
+      background-repeat: no-repeat;
       background-position: center;
-      filter: brightness(0.9);
+      background-size: contain; /* WICHTIG: nicht mehr gezoomt */
+      filter: brightness(0.95);
       z-index: 1;
+    }
+
+    /* leichte Abdunklung für Lesbarkeit */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.15);
+      z-index: 2;
     }
 
     /* TEXT BOX */
     .box {
       position: absolute;
-      bottom: 10%;
+      bottom: 8%;
       left: 50%;
       transform: translateX(-50%);
-      width: 90%;
+      width: 92%;
       max-width: 420px;
-      padding: 28px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
+      padding: 26px;
+      background: rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(10px);
       border-radius: 26px;
       text-align: center;
       color: white;
-      z-index: 2;
+      z-index: 3;
       box-shadow: 0 20px 45px rgba(0,0,0,0.25);
     }
 
@@ -70,10 +82,11 @@
 
 <body>
 
-  <!-- HINTERGRUND -->
+  <!-- Bild -->
   <div class="background"></div>
+  <div class="overlay"></div>
 
-  <!-- TEXT -->
+  <!-- Text -->
   <div class="box">
     <h1>Yaaaay 💖</h1>
     <p id="text"></p>
@@ -82,7 +95,8 @@
   <script>
     const messages = [
       "Dionisa… 💕",
-      "më bëre njeriun më të lumtur në botë 🥰",
+      "më bon njeriun ma ta lumtur ne bote 🥰",
+      "kisha pas qef me ta bo ni dhurat…"
       "ndoshta jo perfekt…",
       "por ishte nga zemra ✨",
       "kthehu shpirt 💖"
@@ -103,7 +117,7 @@
     }
 
     showNextText();
-    setInterval(showNextText, 5000); // langsam & ruhig
+    setInterval(showNextText, 5000);
   </script>
 
 </body>
