@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yaaaay 💖</title>
+  <title>💖</title>
 
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      height: 100vh;
       width: 100vw;
+      height: 100vh;
       overflow: hidden;
       background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
       display: flex;
@@ -23,36 +24,35 @@
       align-items: center;
     }
 
-    /* HINTERGRUND-BILD (GANZ SICHTBAR) */
+    /* Hintergrundbild – GANZ sichtbar */
     .background {
       position: fixed;
       inset: 0;
       background-image: url('img8.jpg');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: contain; /* WICHTIG: nicht mehr gezoomt */
-      filter: brightness(0.95);
+      background-size: contain; /* wichtig */
       z-index: 1;
     }
 
-    /* leichte Abdunklung für Lesbarkeit */
+    /* leichte Abdunklung */
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(0,0,0,0.18);
       z-index: 2;
     }
 
-    /* TEXT BOX */
+    /* Textbox */
     .box {
       position: absolute;
       bottom: 8%;
       left: 50%;
       transform: translateX(-50%);
       width: 92%;
-      max-width: 420px;
-      padding: 26px;
-      background: rgba(255, 255, 255, 0.28);
+      max-width: 440px;
+      padding: 28px 26px;
+      background: rgba(255,255,255,0.3);
       backdrop-filter: blur(10px);
       border-radius: 26px;
       text-align: center;
@@ -62,14 +62,14 @@
     }
 
     h1 {
-      font-size: 36px;
-      margin-bottom: 14px;
+      font-size: 34px;
       font-weight: 700;
+      margin-bottom: 14px;
     }
 
     p {
       font-size: 22px;
-      line-height: 1.45;
+      line-height: 1.5;
       opacity: 0;
       transition: opacity 1.2s ease;
     }
@@ -88,18 +88,17 @@
 
   <!-- Text -->
   <div class="box">
-    <h1>Yaaaay 💖</h1>
+    <h1>💖</h1>
     <p id="text"></p>
   </div>
 
   <script>
     const messages = [
-      "Dionisa… 💕",
-      "më bon njeriun ma ta lumtur ne bote 🥰",
-      "kisha pas qef me ta bo ni dhurat…"
-      "ndoshta jo perfekt…",
-      "por ishte nga zemra ✨",
-      "kthehu shpirt 💖"
+      "Ti më bëre njeriun më të lumtur në botë 💖🥰",
+      "Dua të të bëj një dhuratë 🎁✨",
+      "Ndoshta jo perfekte… 💭",
+      "Por është nga zemra ❤️",
+      "Kthehu shpirt 💞"
     ];
 
     const textEl = document.getElementById("text");
@@ -110,14 +109,17 @@
 
       textEl.classList.remove("show");
       setTimeout(() => {
-        textEl.innerHTML = messages[index];
+        textEl.textContent = messages[index];
         textEl.classList.add("show");
         index++;
       }, 600);
     }
 
+    // erster Text
     showNextText();
-    setInterval(showNextText, 5000);
+
+    // ruhiger Wechsel
+    setInterval(showNextText, 5200);
   </script>
 
 </body>
