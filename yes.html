@@ -10,48 +10,60 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Helvetica, Arial, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
       background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
-    /* Hintergrundbild – ganz sichtbar */
-    .background {
+    /* Bild – zuerst versteckt */
+    .image {
       position: fixed;
       inset: 0;
       background-image: url('img8.jpg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
+      opacity: 0;
+      transition: opacity 2s ease;
       z-index: 1;
     }
 
-    /* leichte Abdunklung */
+    .image.show {
+      opacity: 1;
+    }
+
+    /* Overlay */
     .overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.18);
       z-index: 2;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
     }
 
     /* Textbox */
     .box {
       position: absolute;
-      bottom: 8%;
+      bottom: 10%;
       left: 50%;
       transform: translateX(-50%);
       width: 92%;
-      max-width: 460px;
-      padding: 30px 28px;
+      max-width: 480px;
+      padding: 32px;
       background: rgba(255,255,255,0.32);
       backdrop-filter: blur(10px);
       border-radius: 28px;
@@ -62,10 +74,10 @@
     }
 
     p {
-      font-size: 24px;
+      font-size: 26px;
       line-height: 1.6;
       opacity: 0;
-      transition: opacity 1.4s ease;
+      transition: opacity 1.6s ease;
       font-weight: 600;
     }
 
@@ -77,9 +89,9 @@
 
 <body>
 
-  <!-- Bild -->
-  <div class="background"></div>
-  <div class="overlay"></div>
+  <!-- Bild & Overlay -->
+  <div class="image" id="image"></div>
+  <div class="overlay" id="overlay"></div>
 
   <!-- Text -->
   <div class="box">
@@ -90,30 +102,39 @@
     const messages = [
       "Me bon Njeri ma te lumtur ne Bote💖",
       "Du me ta bo ni Dhurat🎁✨",
-      "Ndoshta jo perfekt po💭",
+      "Ndoshta jo perfekt po🤍",
       "Osht nga Zemra❤️",
       "Kthehu Shpirt💞"
     ];
 
     const textEl = document.getElementById("text");
+    const imageEl = document.getElementById("image");
+    const overlayEl = document.getElementById("overlay");
+
     let index = 0;
 
-    function showNextText() {
+    function showNext() {
       if (index >= messages.length) return;
 
       textEl.classList.remove("show");
+
       setTimeout(() => {
         textEl.textContent = messages[index];
         textEl.classList.add("show");
+
+        // 👉 Bild erscheint NUR beim letzten Text
+        if (messages[index].includes("Kthehu Shpirt")) {
+          imageEl.classList.add("show");
+          overlayEl.classList.add("show");
+        }
+
         index++;
-      }, 700);
+      }, 800);
     }
 
-    // erster Text
-    showNextText();
-
-    // ruhiger Wechsel
-    setInterval(showNextText, 5200);
+    // Start
+    showNext();
+    setInterval(showNext, 6000);
   </script>
 
 </body>
