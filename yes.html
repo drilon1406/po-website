@@ -24,14 +24,14 @@
       align-items: center;
     }
 
-    /* Hintergrundbild – GANZ sichtbar */
+    /* Hintergrundbild – ganz sichtbar */
     .background {
       position: fixed;
       inset: 0;
       background-image: url('img8.jpg');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: contain; /* wichtig */
+      background-size: contain;
       z-index: 1;
     }
 
@@ -50,28 +50,23 @@
       left: 50%;
       transform: translateX(-50%);
       width: 92%;
-      max-width: 440px;
-      padding: 28px 26px;
-      background: rgba(255,255,255,0.3);
+      max-width: 460px;
+      padding: 30px 28px;
+      background: rgba(255,255,255,0.32);
       backdrop-filter: blur(10px);
-      border-radius: 26px;
+      border-radius: 28px;
       text-align: center;
       color: white;
       z-index: 3;
       box-shadow: 0 20px 45px rgba(0,0,0,0.25);
     }
 
-    h1 {
-      font-size: 34px;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
     p {
-      font-size: 22px;
-      line-height: 1.5;
+      font-size: 24px;
+      line-height: 1.6;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity 1.4s ease;
+      font-weight: 600;
     }
 
     p.show {
@@ -88,17 +83,16 @@
 
   <!-- Text -->
   <div class="box">
-    <h1>💖</h1>
     <p id="text"></p>
   </div>
 
   <script>
     const messages = [
-      "Ti më bëre njeriun më të lumtur në botë 💖🥰",
-      "Dua të të bëj një dhuratë 🎁✨",
-      "Ndoshta jo perfekte… 💭",
-      "Por është nga zemra ❤️",
-      "Kthehu shpirt 💞"
+      "me bon njeri ma te lumtur ne bote",
+      "du me ta bo ni dhurat",
+      "ndoshta jo perfekt po",
+      "osht nga zemra",
+      "kthehu shpirt"
     ];
 
     const textEl = document.getElementById("text");
@@ -112,7 +106,7 @@
         textEl.textContent = messages[index];
         textEl.classList.add("show");
         index++;
-      }, 600);
+      }, 700);
     }
 
     // erster Text
