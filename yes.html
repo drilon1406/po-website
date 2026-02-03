@@ -2,115 +2,109 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ne ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yaaaay 💖</title>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     body {
       height: 100vh;
       width: 100vw;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       overflow: hidden;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: black;
     }
 
-    .slideshow {
+    /* HINTERGRUNDBILD */
+    .background {
       position: fixed;
       inset: 0;
-    }
-
-    .slide {
-      position: absolute;
-      inset: 0;
+      background-image: url('img8.jpg');
       background-size: cover;
       background-position: center;
-      opacity: 0;
-      transition: opacity 1.5s ease;
+      filter: brightness(0.9);
+      z-index: 1;
     }
 
-    .slide.active {
-      opacity: 1;
-    }
-
-    .overlay {
+    /* TEXT BOX */
+    .box {
       position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.25);
-    }
-
-    .text {
-      position: absolute;
-      bottom: 12%;
-      width: 100%;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 420px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 26px;
       text-align: center;
       color: white;
-      font-size: 28px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      z-index: 2;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 22px;
+      line-height: 1.45;
       opacity: 0;
-      transition: opacity 2s ease;
+      transition: opacity 1.2s ease;
     }
 
-    .text.show {
+    p.show {
       opacity: 1;
-    }
-
-    @media (min-width: 600px) {
-      .text {
-        font-size: 34px;
-      }
     }
   </style>
 </head>
+
 <body>
 
-<div class="slideshow">
-  <div class="slide active" style="background-image:url('img1.jpg')"></div>
-  <div class="slide" style="background-image:url('img2.jpg')"></div>
-  <div class="slide" style="background-image:url('img3.jpg')"></div>
-  <div class="slide" style="background-image:url('img4.jpg')"></div>
-  <div class="slide" style="background-image:url('img5.jpg')"></div>
-  <div class="slide" style="background-image:url('img6.jpg')"></div>
-  <div class="slide" style="background-image:url('img7.jpg')"></div>
-  <div class="slide" style="background-image:url('img8.jpg')"></div>
+  <!-- HINTERGRUND -->
+  <div class="background"></div>
 
-  <div class="overlay"></div>
-</div>
+  <!-- TEXT -->
+  <div class="box">
+    <h1>Yaaaay 💖</h1>
+    <p id="text"></p>
+  </div>
 
-<div class="text" id="finalText">kthehu shpirt ❤️</div>
+  <script>
+    const messages = [
+      "Dionisa… 💕",
+      "më bëre njeriun më të lumtur në botë 🥰",
+      "ndoshta jo perfekt…",
+      "por ishte nga zemra ✨",
+      "kthehu shpirt 💖"
+    ];
 
-<script>
-  const slides = document.querySelectorAll('.slide');
-  const text = document.getElementById('finalText');
+    const textEl = document.getElementById("text");
+    let index = 0;
 
-  let index = 0;
-  const interval = 3500; // Zeit pro Bild (ruhig!)
+    function showNextText() {
+      if (index >= messages.length) return;
 
-  function showNext() {
-    slides[index].classList.remove('active');
-    index++;
-
-    if (index < slides.length) {
-      slides[index].classList.add('active');
-    } else {
-      // letztes Bild bleibt
-      slides[slides.length - 1].classList.add('active');
-      setTimeout(() => text.classList.add('show'), 2500);
-      clearInterval(timer);
+      textEl.classList.remove("show");
+      setTimeout(() => {
+        textEl.innerHTML = messages[index];
+        textEl.classList.add("show");
+        index++;
+      }, 600);
     }
-  }
 
-  const timer = setInterval(showNext, interval);
-</script>
+    showNextText();
+    setInterval(showNextText, 5000); // langsam & ruhig
+  </script>
 
 </body>
 </html>
