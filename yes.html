@@ -1,110 +1,116 @@
 <!DOCTYPE html>
 <html lang="sq">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Po 💖</title>
 
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive;
+      font-family: "Comic Sans MS", cursive;
       background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right)
+               env(safe-area-inset-bottom) env(safe-area-inset-left);
       color: white;
-      overflow: hidden;
+      text-align: center;
     }
 
     .box {
-      background: rgba(255,255,255,0.25);
-      padding: 35px;
-      border-radius: 25px;
-      max-width: 350px;
-      z-index: 2;
-      animation: fadeIn 1.5s ease;
+      width: min(92vw, 420px);
+      background: rgba(255,255,255,0.22);
+      padding: 28px 22px;
+      border-radius: 24px;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1.3s ease;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
     }
 
     h1 {
-      font-size: 30px;
-      margin-bottom: 15px;
+      margin: 0 0 12px;
+      font-size: clamp(26px, 6vw, 34px);
     }
 
     p {
-      font-size: 18px;
+      margin: 0;
+      font-size: clamp(16px, 4.2vw, 19px);
       opacity: 0;
       transition: opacity 0.8s ease;
+      line-height: 1.35;
     }
 
     .heart {
       position: absolute;
-      bottom: -20px;
+      bottom: -24px;
       font-size: 26px;
       animation: floatUp 6s linear infinite;
-      opacity: 0.7;
+      opacity: 0.75;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
       0% { transform: translateY(0); opacity: 0; }
-      10% { opacity: 1; }
+      12% { opacity: 1; }
       100% { transform: translateY(-110vh); opacity: 0; }
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.96); }
+      to   { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
+
 <body>
+  <div class="box">
+    <h1>Yaaaaay 💖</h1>
+    <p id="text"></p>
+  </div>
 
-<div class="box">
-  <h1>Yaaaaay 💖</h1>
-  <p id="text"></p>
-</div>
+  <script>
+    const text = document.getElementById("text");
 
-<script>
-  const text = document.getElementById("text");
+    const messages = [
+      "Dionisa… 💕<br>më bëre njeriun më të lumtur në botë 🥰",
+      "Më fal që ndoshta nuk erdhi ashtu siç e kishe imagjinuar… 💔",
+      "Por ndonjëherë gjërat më të bukura vijnë ndryshe… ✨",
+      "Tani…<br><strong>kthehu pas.</strong> 💖"
+    ];
 
-  const messages = [
-    "Dionisa… 💕<br>më bëre njeriun më të lumtur në botë 🥰",
-    "Më fal që ndoshta nuk erdhi ashtu siç e kishe imagjinuar… 💔",
-    "Por ndonjëherë gjërat më të bukura vijnë ndryshe… ✨",
-    "Tani…<br><strong>kthehu.</strong> 💖"
-  ];
+    let index = 0;
 
-  let index = 0;
-
-  function showNext() {
-    if (index < messages.length) {
-      text.style.opacity = 0;
-      setTimeout(() => {
-        text.innerHTML = messages[index];
-        text.style.opacity = 1;
-        index++;
-      }, 500);
+    function showNext() {
+      if (index < messages.length) {
+        text.style.opacity = 0;
+        setTimeout(() => {
+          text.innerHTML = messages[index];
+          text.style.opacity = 1;
+          index++;
+        }, 450);
+      }
     }
-  }
 
-  showNext();
-  setInterval(showNext, 3500);
+    showNext();
+    setInterval(showNext, 3400);
 
-  // Herz-Animation
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.textContent = "💗";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 7000);
-  }
-
-  setInterval(createHeart, 400);
-</script>
-
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💗";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+    setInterval(createHeart, 400);
+  </script>
 </body>
 </html>
