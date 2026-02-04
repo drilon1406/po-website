@@ -16,15 +16,15 @@
 
     body {
       width: 100vw;
-      height: 100vh;
+      height: 100dvh; /* besser auf iPhone */
+      overflow: hidden;
       background: linear-gradient(135deg, #ff9ebc, #ffd1dc);
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
     }
 
-    /* Bild – zuerst versteckt */
+    /* Bild – erst versteckt */
     .image {
       position: fixed;
       inset: 0;
@@ -33,69 +33,99 @@
       background-position: center;
       background-size: contain;
       opacity: 0;
-      transition: opacity 2s ease;
+      transition: opacity 900ms ease;
       z-index: 1;
+
+      transform: translate3d(0,0,0);
+      will-change: opacity;
     }
 
-    .image.show {
-      opacity: 1;
-    }
+    .image.show { opacity: 1; }
 
     /* Overlay */
     .overlay {
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.18);
-      z-index: 2;
       opacity: 0;
-      transition: opacity 2s ease;
+      transition: opacity 900ms ease;
+      z-index: 2;
+
+      transform: translate3d(0,0,0);
+      will-change: opacity;
     }
 
-    .overlay.show {
-      opacity: 1;
-    }
+    .overlay.show { opacity: 1; }
 
     /* Textbox */
     .box {
       position: absolute;
-      bottom: 10%;
       left: 50%;
-      transform: translateX(-50%);
-      width: 92%;
-      max-width: 480px;
-      padding: 32px;
-      background: rgba(255,255,255,0.32);
-      backdrop-filter: blur(10px);
+      bottom: 10%;
+      transform: translateX(-50%) translate3d(0,0,0);
+      width: min(92vw, 520px);
+      padding: 30px 26px;
+
+      /* stabiler auf Mobile als backdrop-filter */
+      background: rgba(255, 255, 255, 0.33);
+      border: 1px solid rgba(255,255,255,0.20);
       border-radius: 28px;
       text-align: center;
-      color: white;
+      color: #fff;
       z-index: 3;
       box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+
+      will-change: transform;
     }
 
-    p {
+    /* Crossfade Text Layers (mobile-sicher) */
+    .textWrap {
+      position: relative;
+      min-height: 3.4em; /* verhindert Springen bei Zeilenwechsel */
+    }
+
+    .line {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
       font-size: 26px;
-      line-height: 1.6;
+      line-height: 1.55;
+      font-weight: 650;
+
       opacity: 0;
-      transition: opacity 1.6s ease;
-      font-weight: 600;
+      transform: translate3d(0, 10px, 0);
+      transition: opacity 650ms ease, transform 650ms ease;
+
+      will-change: opacity, transform;
     }
 
-    p.show {
+    .line.show {
       opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    /* Falls sehr kleine Displays */
+    @media (max-width: 380px) {
+      .line { font-size: 23px; }
+      .box { bottom: 8%; padding: 26px 22px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Bild & Overlay -->
   <div class="image" id="image"></div>
   <div class="overlay" id="overlay"></div>
 
-  <!-- Text -->
   <div class="box">
-    <p id="text"></p>
+    <div class="textWrap">
+      <div class="line show" id="lineA"></div>
+      <div class="line" id="lineB"></div>
+    </div>
   </div>
 
   <script>
@@ -107,34 +137,51 @@
       "Kthehu Shpirt💞"
     ];
 
-    const textEl = document.getElementById("text");
     const imageEl = document.getElementById("image");
     const overlayEl = document.getElementById("overlay");
 
-    let index = 0;
+    const lineA = document.getElementById("lineA");
+    const lineB = document.getElementById("lineB");
 
-    function showNext() {
-      if (index >= messages.length) return;
+    let i = 0;
+    let showingA = true;
 
-      textEl.classList.remove("show");
+    // Starttext direkt setzen
+    lineA.textContent = messages[0];
+    i = 1;
 
-      setTimeout(() => {
-        textEl.textContent = messages[index];
-        textEl.classList.add("show");
+    const STEP_MS = 6500;   // wie lange jede Zeile stehen bleibt
+    const FADE_MS = 650;    // muss zu CSS passen (650ms)
 
-        // 👉 Bild erscheint NUR beim letzten Text
-        if (messages[index].includes("Kthehu Shpirt")) {
-          imageEl.classList.add("show");
-          overlayEl.classList.add("show");
-        }
+    function swapText(nextText) {
+      const showEl = showingA ? lineB : lineA;
+      const hideEl = showingA ? lineA : lineB;
 
-        index++;
-      }, 800);
+      showEl.textContent = nextText;
+
+      // Crossfade: erst Show vorbereiten
+      showEl.classList.add("show");
+      hideEl.classList.remove("show");
+
+      showingA = !showingA;
     }
 
-    // Start
-    showNext();
-    setInterval(showNext, 6000);
+    function tick() {
+      if (i >= messages.length) return;
+
+      const text = messages[i];
+
+      // Bild erst beim letzten Text einblenden
+      if (text.includes("Kthehu Shpirt")) {
+        imageEl.classList.add("show");
+        overlayEl.classList.add("show");
+      }
+
+      swapText(text);
+      i++;
+    }
+
+    setInterval(tick, STEP_MS);
   </script>
 
 </body>
